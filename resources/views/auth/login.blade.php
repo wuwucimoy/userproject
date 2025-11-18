@@ -4,42 +4,85 @@
     <meta charset="UTF-8">
     <title>Login</title>
 
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #fce4ec;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f5f6fa;
+        }
+
+        .container {
             display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
         }
 
-        .card {
-            background: white;
-            padding: 25px;
-            width: 320px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        .left-side {
+            width: 50%;
+            background: #3c4a63;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
         }
 
-        h2 {
-            margin-bottom: 15px;
-            text-align: center;
-            color: #ec407a;
+        .left-side h1 {
+            font-size: 30px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .right-side {
+            width: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 340px;
+        }
+
+        .login-box h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .login-box p {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 25px;
         }
 
         label {
             font-size: 14px;
-            color: #555;
+            font-weight: 500;
+            color: #444;
         }
 
         input {
             width: 100%;
-            padding: 9px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #d2d6dc;
             margin-top: 5px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .show-pass {
@@ -48,64 +91,101 @@
 
         .toggle {
             position: absolute;
-            right: 10px;
+            right: 12px;
             top: 12px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             color: #777;
         }
 
-        button {
+        .btn {
             width: 100%;
             padding: 10px;
-            background: #ec407a;
-            border: none;
+            background: #1e66f2;
             color: white;
+            border: none;
             border-radius: 6px;
-            font-size: 16px;
             cursor: pointer;
+            font-size: 15px;
+            margin-top: 5px;
         }
 
-        button:hover {
-            background: #d81b60;
+        .btn:hover {
+            background: #1652c0;
         }
 
-        .error {
-            color: red;
+        .bottom-text {
+            font-size: 13px;
             text-align: center;
-            margin-bottom: 10px;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #1e66f2;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Login</h2>
+<div class="container">
 
-    @if ($errors->any())
-        <p class="error">{{ $errors->first() }}</p>
-    @endif
+    <div class="left-side">
+        <img src="/logo.png" width="80" alt="Logo">
+        <h1>TokeShope</h1>
+    </div>
 
-    <form method="POST" action="/login">
-        @csrf
+    <div class="right-side">
+        <div class="login-box">
 
-        <label>Username</label>
-        <input type="text" name="username" required>
+            <h2>Account Login</h2>
+            <p>If you are already a member you can login with your username and password.</p>
 
-        <label>Password</label>
-        <div class="show-pass">
-            <input type="password" id="password" name="password" required>
-            <span class="toggle" onclick="togglePassword()">👁️</span>
+            @if ($errors->any())
+                <p class="error">{{ $errors->first() }}</p>
+            @endif
+
+            <form method="POST" action="/login">
+                @csrf
+
+                <label>Username</label>
+                <input type="text" name="username" required>
+
+                <label>Password</label>
+                <div class="show-pass">
+                    <input type="password" id="password" name="password" required>
+
+                    <!-- Icon Bootstrap -->
+                    <i class="bi bi-eye-slash toggle" id="toggleIcon" onclick="togglePassword()"></i>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+
+            <div class="bottom-text">
+                Don't have an account? <a href="{{ route('register') }}">Sign up here</a>
+
+            </div>
+
         </div>
+    </div>
 
-        <button type="submit">Login</button>
-    </form>
 </div>
 
 <script>
     function togglePassword() {
-        let pass = document.getElementById("password");
-        pass.type = pass.type === "password" ? "text" : "password";
+        const input = document.getElementById("password");
+        const icon = document.getElementById("toggleIcon");
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        } else {
+            input.type = "password";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        }
     }
 </script>
 

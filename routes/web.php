@@ -18,3 +18,7 @@ Route::get('/index', function () {
 
 // Logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// ROUTE REGISTER
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
