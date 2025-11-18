@@ -154,7 +154,8 @@
                 <label>Date Of Birth</label>
                 <input type="date" name="dob" required>
 
-                <button class="btn">Continue</button>
+                <button class="btn" onclick="window.location='{{ route('login') }}'">Continue</button>
+
             </form>
 
         </div>
